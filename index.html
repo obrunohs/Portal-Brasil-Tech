@@ -413,11 +413,31 @@
         <p>WhatsApp: (11) 99999-9999</p>
 
         <div style="margin-top:25px; display:grid; gap:15px;">
-          <input type="text" placeholder="Seu nome" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
-          <input type="email" placeholder="Seu e-mail" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
-          <textarea placeholder="Digite sua mensagem" rows="6" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;"></textarea>
-          <button class="btn">Enviar mensagem</button>
+          <input id="nomeContato" type="text" placeholder="Seu nome" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
+          <input id="emailContato" type="email" placeholder="Seu e-mail" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
+          <textarea id="mensagemContato" placeholder="Digite sua mensagem" rows="6" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;"></textarea>
+          <button class="btn" onclick="enviarContato()">Enviar mensagem</button>
         </div>
+
+        <p id="statusContato" style="margin-top:15px; color:#00eaff; font-weight:bold;"></p>
+      </article>
+    </section>
+
+    <section id="areaADM" style="display:none; margin-top:30px; margin-bottom:40px;">
+      <article style="border:2px solid #00eaff; box-shadow:0 0 25px rgba(0,234,255,0.25);">
+        <h2 class="section-title">Área Secreta ADM</h2>
+        <p>Bem-vindo, ADM. Aqui futuramente aparecerão as mensagens reais salvas no Firebase.</p>
+
+        <div id="listaMensagensADM" style="margin-top:25px; display:grid; gap:15px;">
+          <div style="background:#0b1020; padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+            <h3 style="color:#00eaff; margin-bottom:8px;">Exemplo de mensagem</h3>
+            <p><strong>Nome:</strong> Visitante Teste</p>
+            <p><strong>Email:</strong> visitante@email.com</p>
+            <p><strong>Mensagem:</strong> Quando conectarmos o Firebase, as mensagens reais aparecerão aqui.</p>
+          </div>
+        </div>
+
+        <button class="btn" style="margin-top:20px;" onclick="sairADM()">Sair da área ADM</button>
       </article>
     </section>
 
@@ -444,6 +464,37 @@
       visitas = Number(localStorage.getItem("visitasPortalTech")) + 1;
       localStorage.setItem("visitasPortalTech", visitas);
       document.getElementById("contador").innerText = visitas;
+    }
+
+    function enviarContato() {
+      const nome = document.getElementById("nomeContato").value.trim();
+      const email = document.getElementById("emailContato").value.trim();
+      const mensagem = document.getElementById("mensagemContato").value.trim();
+      const status = document.getElementById("statusContato");
+
+      if (nome === "@ADM.BVS") {
+        document.getElementById("areaADM").style.display = "block";
+        status.innerText = "Área ADM liberada.";
+        document.getElementById("areaADM").scrollIntoView({ behavior: "smooth" });
+        return;
+      }
+
+      if (nome === "" || email === "" || mensagem === "") {
+        status.innerText = "Preencha nome, e-mail e mensagem antes de enviar.";
+        return;
+      }
+
+      status.innerText = "Mensagem registrada no site. Depois vamos conectar ao Firebase para você receber e ver tudo na área ADM.";
+
+      document.getElementById("nomeContato").value = "";
+      document.getElementById("emailContato").value = "";
+      document.getElementById("mensagemContato").value = "";
+    }
+
+    function sairADM() {
+      document.getElementById("areaADM").style.display = "none";
+      document.getElementById("statusContato").innerText = "Você saiu da área ADM.";
+      document.getElementById("contato").scrollIntoView({ behavior: "smooth" });
     }
   </script>
 
