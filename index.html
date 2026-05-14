@@ -415,7 +415,7 @@
         <div style="margin-top:25px; display:grid; gap:15px;">
           <input id="nomeContato" type="text" placeholder="Seu nome" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
           <input id="emailContato" type="email" placeholder="Seu e-mail" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
-          <textarea id="mensagemContato" placeholder="Digite sua mensagem" rows="6" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;"></textarea>
+          <textarea id="mensagemContato" placeholder="Digite sua mensagem" rows="6" maxlength="800" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white; resize:none;"></textarea>
           <button class="btn" onclick="enviarContato()">Enviar mensagem</button>
         </div>
 
