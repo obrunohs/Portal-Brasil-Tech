@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Portal Brasil Tech</title>
+
+  <!--
+    Depois que sua conta do Google AdSense for aprovada,
+    cole o script oficial do AdSense aqui dentro do <head>.
+
+    Exemplo:
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=SEU_CLIENT_ID" crossorigin="anonymous"></script>
+  -->
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      background: #0b1020;
+      color: white;
+    }
+
+    header {
+      background: linear-gradient(135deg, #121a35, #203a88);
+      padding: 25px 8%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.35);
+    }
+
+    .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #00eaff;
+    }
+
+    nav a {
+      color: white;
+      text-decoration: none;
+      margin-left: 20px;
+      font-weight: bold;
+    }
+
+    nav a:hover {
+      color: #00eaff;
+    }
+
+    .hero {
+      min-height: 420px;
+      padding: 80px 8%;
+      background:
+        linear-gradient(rgba(11,16,32,0.75), rgba(11,16,32,0.95)),
+        radial-gradient(circle at top right, #00eaff55, transparent 35%);
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: 46px;
+      margin-bottom: 20px;
+      line-height: 1.1;
+    }
+
+    .hero p {
+      font-size: 18px;
+      color: #d7e4ff;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #00eaff;
+      color: #05101f;
+      padding: 14px 24px;
+      border-radius: 10px;
+      text-decoration: none;
+      font-weight: bold;
+      border: none;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      background: #48f4ff;
+    }
+
+    .stats-card {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 20px;
+      padding: 30px;
+      text-align: center;
+      box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+    }
+
+    .stats-card h2 {
+      color: #00eaff;
+      font-size: 42px;
+      margin-bottom: 10px;
+    }
+
+    .ad-box {
+      margin: 30px auto;
+      max-width: 970px;
+      min-height: 120px;
+      background: rgba(255,255,255,0.08);
+      border: 2px dashed #00eaff88;
+      border-radius: 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #bfefff;
+      text-align: center;
+      padding: 20px;
+    }
+
+    main {
+      padding: 40px 8%;
+    }
+
+    .section-title {
+      font-size: 32px;
+      margin-bottom: 25px;
+      color: #00eaff;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 22px;
+    }
+
+    .card {
+      background: #121a35;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      border-color: #00eaff;
+    }
+
+    .thumb {
+      height: 160px;
+      background: linear-gradient(135deg, #00eaff, #203a88);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 48px;
+    }
+
+    .card-content {
+      padding: 20px;
+    }
+
+    .card-content h3 {
+      margin-bottom: 10px;
+      color: white;
+    }
+
+    .card-content p {
+      color: #c6d3f2;
+      line-height: 1.5;
+      margin-bottom: 15px;
+    }
+
+    .article-area {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 25px;
+      margin-top: 50px;
+    }
+
+    article, aside {
+      background: #121a35;
+      border-radius: 18px;
+      padding: 25px;
+      border: 1px solid rgba(255,255,255,0.08);
+    }
+
+    article h2, aside h3 {
+      color: #00eaff;
+      margin-bottom: 15px;
+    }
+
+    article p, aside p, aside li {
+      color: #d7e4ff;
+      line-height: 1.7;
+      margin-bottom: 12px;
+    }
+
+    aside ul {
+      padding-left: 18px;
+    }
+
+    footer {
+      margin-top: 50px;
+      background: #060914;
+      padding: 30px 8%;
+      text-align: center;
+      color: #9faed4;
+    }
+
+    @media (max-width: 850px) {
+      header {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      nav a {
+        margin: 8px;
+        display: inline-block;
+      }
+
+      .hero,
+      .article-area {
+        grid-template-columns: 1fr;
+      }
+
+      .hero h1 {
+        font-size: 34px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <div class="logo">Portal Brasil Tech</div>
+    <nav>
+      <a href="#inicio">Início</a>
+      <a href="#noticias">Notícias</a>
+      <a href="#guias">Guias</a>
+      <a href="#contato">Contato</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="inicio">
+    <div>
+      <h1>Notícias, tecnologia e dicas para atrair visitantes todos os dias</h1>
+      <p>
+        Um site simples, rápido e preparado para monetização com anúncios.
+        Publique conteúdos úteis, receba visitas e depois adicione Google AdSense,
+        banners patrocinados ou links de afiliados.
+      </p>
+      <a href="#noticias" class="btn">Ver conteúdos</a>
+    </div>
+
+    <div class="stats-card">
+      <h2 id="contador">0</h2>
+      <p>visitas simuladas neste navegador</p>
+      <br>
+      <button class="btn" onclick="novaVisita()">Simular nova visita</button>
+    </div>
+  </section>
+
+  <div class="ad-box">
+    Espaço para anúncio 970x120<br>
+    Depois coloque aqui o código oficial do Google AdSense.
+  </div>
+
+  <main>
+    <h2 class="section-title" id="noticias">Conteúdos em destaque</h2>
+
+    <section class="grid">
+      <div class="card">
+        <div class="thumb">💻</div>
+        <div class="card-content">
+          <h3>Como ganhar dinheiro com um site?</h3>
+          <p>Veja formas reais de monetização usando anúncios, afiliados e conteúdo de valor.</p>
+          <a href="#artigo" class="btn">Ler mais</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="thumb">📱</div>
+        <div class="card-content">
+          <h3>Dicas para atrair visitas</h3>
+          <p>Aprenda ideias simples para criar posts que as pessoas pesquisam no Google.</p>
+          <a href="#artigo" class="btn">Ler mais</a>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="thumb">🚀</div>
+        <div class="card-content">
+          <h3>SEO básico para iniciantes</h3>
+          <p>Organize títulos, descrições e palavras-chave para seu site aparecer melhor.</p>
+          <a href="#artigo" class="btn">Ler mais</a>
+        </div>
+      </div>
+    </section>
+
+    <div class="ad-box">
+      Espaço para banner no meio da página
+    </div>
+
+    <section class="article-area" id="artigo">
+      <article>
+        <h2>Como monetizar um site por visitas</h2>
+        <p>
+          Para monetizar um site, você precisa primeiro criar conteúdo original e receber visitantes reais.
+          Depois, pode usar plataformas de anúncios como Google AdSense, redes de afiliados ou vender espaços para patrocinadores.
+        </p>
+        <p>
+          Quanto mais pessoas acessarem seu site e permanecerem lendo os conteúdos, maior pode ser o potencial de ganho.
+          O segredo é publicar assuntos úteis, como tutoriais, notícias, listas, dicas e guias completos.
+        </p>
+        <p>
+          Evite copiar conteúdo de outros sites. Plataformas de anúncios costumam exigir conteúdo próprio,
+          navegação clara, página de contato, política de privacidade e boa experiência para o visitante.
+        </p>
+      </article>
+
+      <aside id="guias">
+        <h3>Próximos passos</h3>
+        <ul>
+          <li>Criar mais páginas com conteúdos originais.</li>
+          <li>Hospedar o site no GitHub Pages, Netlify ou Hostinger.</li>
+          <li>Criar página de política de privacidade.</li>
+          <li>Comprar domínio próprio, se possível.</li>
+          <li>Solicitar aprovação no Google AdSense.</li>
+        </ul>
+      </aside>
+    </section>
+  
+
+    <section style="margin-top:60px;">
+      <h2 class="section-title">Mais artigos originais</h2>
+
+      <section class="grid">
+        <div class="card">
+          <div class="thumb">🎮</div>
+          <div class="card-content">
+            <h3>Jogos online que estão crescendo</h3>
+            <p>Conheça jogos populares que recebem milhares de buscas diariamente na internet.</p>
+            <a href="#" class="btn">Ler artigo</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">🤖</div>
+          <div class="card-content">
+            <h3>Ferramentas de IA gratuitas</h3>
+            <p>Veja plataformas de inteligência artificial úteis para criar imagens, textos e vídeos.</p>
+            <a href="#" class="btn">Ler artigo</a>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="thumb">💰</div>
+          <div class="card-content">
+            <h3>Ideias para ganhar dinheiro online</h3>
+            <p>Dicas para começar projetos digitais usando apenas computador e internet.</p>
+            <a href="#" class="btn">Ler artigo</a>
+          </div>
+        </div>
+      </section>
+    </section>
+
+    <section style="margin-top:60px;">
+      <article>
+        <h2 class="section-title">Política de Privacidade</h2>
+
+        <p>
+          Este site pode coletar informações básicas de navegação para melhorar a experiência do usuário.
+          Nenhum dado pessoal sensível é vendido ou compartilhado sem autorização.
+        </p>
+
+        <p>
+          Cookies podem ser utilizados para personalização de anúncios, estatísticas de visitas e funcionamento do site.
+          Ao continuar navegando, você concorda com o uso dessas tecnologias.
+        </p>
+
+        <p>
+          Plataformas de anúncios como Google AdSense podem usar cookies para exibir anúncios personalizados.
+        </p>
+
+        <p>
+          Caso tenha dúvidas sobre privacidade ou remoção de informações, entre em contato pelo e-mail informado abaixo.
+        </p>
+      </article>
+    </section>
+
+    <section style="margin-top:60px; margin-bottom:40px;">
+      <article>
+        <h2 class="section-title">Contato</h2>
+
+        <p>Email: contato@portalbrasiltech.com</p>
+        <p>Instagram: @portalbrasiltech</p>
+        <p>WhatsApp: (11) 99999-9999</p>
+
+        <div style="margin-top:25px; display:grid; gap:15px;">
+          <input type="text" placeholder="Seu nome" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
+          <input type="email" placeholder="Seu e-mail" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;">
+          <textarea placeholder="Digite sua mensagem" rows="6" style="padding:15px; border:none; border-radius:10px; background:#0b1020; color:white;"></textarea>
+          <button class="btn">Enviar mensagem</button>
+        </div>
+      </article>
+    </section>
+
+  </main>
+
+  <footer id="contato">
+    <p>Portal Brasil Tech © 2026 - Site criado para conteúdo, visitas e monetização.</p>
+    <p>Contato: seuemail@exemplo.com</p>
+  </footer>
+
+  <script>
+    let visitas = localStorage.getItem("visitasPortalTech");
+
+    if (!visitas) {
+      visitas = 1;
+    } else {
+      visitas = Number(visitas) + 1;
+    }
+
+    localStorage.setItem("visitasPortalTech", visitas);
+    document.getElementById("contador").innerText = visitas;
+
+    function novaVisita() {
+      visitas = Number(localStorage.getItem("visitasPortalTech")) + 1;
+      localStorage.setItem("visitasPortalTech", visitas);
+      document.getElementById("contador").innerText = visitas;
+    }
+  </script>
+
+</body>
+</html>
