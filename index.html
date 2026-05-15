@@ -269,10 +269,15 @@
     </div>
 
     <div class="stats-card">
-      <h2 id="contador">0</h2>
-      <p>visitas simuladas neste navegador</p>
+      <h2 style="font-size:36px; color:#00eaff; margin-bottom:15px;">Portal Brasil Tech</h2>
+      <p style="line-height:1.7; color:#d7e4ff;">
+        Conteúdo atualizado sobre tecnologia, inteligência artificial,
+        jogos, internet e tendências digitais.
+      </p>
       <br>
-      <button class="btn" onclick="novaVisita()">Simular nova visita</button>
+      <p style="color:#9fc7ff;">
+        Novos artigos e novidades adicionados frequentemente.
+      </p>
     </div>
   </section>
 
@@ -465,26 +470,7 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-    let visitas = localStorage.getItem("visitasPortalTech");
-
-    if (!visitas) {
-      visitas = 1;
-    } else {
-      visitas = Number(visitas) + 1;
-    }
-
-    localStorage.setItem("visitasPortalTech", visitas);
-
-    const contador = document.getElementById("contador");
-    if (contador) {
-      contador.innerText = visitas;
-    }
-
-    window.novaVisita = function() {
-      visitas = Number(localStorage.getItem("visitasPortalTech")) + 1;
-      localStorage.setItem("visitasPortalTech", visitas);
-      document.getElementById("contador").innerText = visitas;
-    };
+    
 
     window.enviarContato = async function() {
       const nome = document.getElementById("nomeContato").value.trim();
