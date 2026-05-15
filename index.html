@@ -465,7 +465,6 @@
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
 
-
     let visitas = localStorage.getItem("visitasPortalTech");
 
     if (!visitas) {
@@ -475,15 +474,19 @@
     }
 
     localStorage.setItem("visitasPortalTech", visitas);
-    document.getElementById("contador").innerText = visitas;
 
-    function novaVisita() {
+    const contador = document.getElementById("contador");
+    if (contador) {
+      contador.innerText = visitas;
+    }
+
+    window.novaVisita = function() {
       visitas = Number(localStorage.getItem("visitasPortalTech")) + 1;
       localStorage.setItem("visitasPortalTech", visitas);
       document.getElementById("contador").innerText = visitas;
-    }
+    };
 
-    window.enviarContato = function() {
+    window.enviarContato = async function() {
       const nome = document.getElementById("nomeContato").value.trim();
       const email = document.getElementById("emailContato").value.trim();
       const mensagem = document.getElementById("mensagemContato").value.trim();
@@ -502,19 +505,26 @@
         return;
       }
 
-      push(ref(db, "mensagens"), {
-        nome,
-        email,
-        mensagem,
-        data: new Date().toLocaleString("pt-BR")
-      });
+      status.innerText = "Enviando mensagem...";
 
-      status.innerText = "Mensagem enviada com sucesso.";
+      try {
+        await push(ref(db, "mensagens"), {
+          nome: nome,
+          email: email,
+          mensagem: mensagem,
+          data: new Date().toLocaleString("pt-BR")
+        });
 
-      document.getElementById("nomeContato").value = "";
-      document.getElementById("emailContato").value = "";
-      document.getElementById("mensagemContato").value = "";
-    }
+        status.innerText = "Mensagem enviada com sucesso.";
+
+        document.getElementById("nomeContato").value = "";
+        document.getElementById("emailContato").value = "";
+        document.getElementById("mensagemContato").value = "";
+      } catch (erro) {
+        console.error("Erro ao enviar mensagem:", erro);
+        status.innerText = "Erro ao enviar. Verifique se o Realtime Database está criado e se as Rules permitem leitura e escrita.";
+      }
+    };
 
     function carregarMensagensADM() {
       const lista = document.getElementById("listaMensagensADM");
@@ -531,27 +541,38 @@
           return;
         }
 
-        snapshot.forEach((child) => {
-          const dados = child.val();
+        const mensagens = [];
 
+        snapshot.forEach((child) => {
+          mensagens.push(child.val());
+        });
+
+        mensagens.reverse().forEach((dados) => {
           lista.innerHTML += `
             <div style="background:#0b1020; padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
               <h3 style="color:#00eaff; margin-bottom:8px;">Nova mensagem</h3>
-              <p><strong>Nome:</strong> ${dados.nome}</p>
-              <p><strong>Email:</strong> ${dados.email}</p>
-              <p><strong>Mensagem:</strong> ${dados.mensagem}</p>
-              <p><strong>Data:</strong> ${dados.data}</p>
+              <p><strong>Nome:</strong> ${dados.nome || "Sem nome"}</p>
+              <p><strong>Email:</strong> ${dados.email || "Sem email"}</p>
+              <p><strong>Mensagem:</strong> ${dados.mensagem || "Sem mensagem"}</p>
+              <p><strong>Data:</strong> ${dados.data || "Sem data"}</p>
             </div>
           `;
         });
+      }, (erro) => {
+        lista.innerHTML = `
+          <div style="background:#0b1020; padding:18px; border-radius:12px; color:#ff8080;">
+            Erro ao carregar mensagens. Verifique as regras do Firebase.
+          </div>
+        `;
+        console.error("Erro ao carregar mensagens:", erro);
       });
     }
 
-    window.sairADM() {
+    window.sairADM = function() {
       document.getElementById("areaADM").style.display = "none";
       document.getElementById("statusContato").innerText = "Você saiu da área ADM.";
       document.getElementById("contato").scrollIntoView({ behavior: "smooth" });
-    }
+    };
   </script>
 
 </body>
