@@ -448,7 +448,24 @@
     <p>Contato: seuemail@exemplo.com</p>
   </footer>
 
-  <script>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-app.js";
+    import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.13.0/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCHtz6Qy4J0TL6gx-ub6ew30ztkm60bdxM",
+      authDomain: "portal-brasil-tech-contato.firebaseapp.com",
+      databaseURL: "https://portal-brasil-tech-contato-default-rtdb.firebaseio.com/",
+      projectId: "portal-brasil-tech-contato",
+      storageBucket: "portal-brasil-tech-contato.firebasestorage.app",
+      messagingSenderId: "659851179294",
+      appId: "1:659851179294:web:1d507f6f94b257e896c50f"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getDatabase(app);
+
+
     let visitas = localStorage.getItem("visitasPortalTech");
 
     if (!visitas) {
@@ -466,7 +483,7 @@
       document.getElementById("contador").innerText = visitas;
     }
 
-    function enviarContato() {
+    window.enviarContato = function() {
       const nome = document.getElementById("nomeContato").value.trim();
       const email = document.getElementById("emailContato").value.trim();
       const mensagem = document.getElementById("mensagemContato").value.trim();
@@ -475,6 +492,7 @@
       if (nome === "@ADM.BVS") {
         document.getElementById("areaADM").style.display = "block";
         status.innerText = "Área ADM liberada.";
+        carregarMensagensADM();
         document.getElementById("areaADM").scrollIntoView({ behavior: "smooth" });
         return;
       }
@@ -484,14 +502,52 @@
         return;
       }
 
-      status.innerText = "Mensagem registrada no site. Depois vamos conectar ao Firebase para você receber e ver tudo na área ADM.";
+      push(ref(db, "mensagens"), {
+        nome,
+        email,
+        mensagem,
+        data: new Date().toLocaleString("pt-BR")
+      });
+
+      status.innerText = "Mensagem enviada com sucesso.";
 
       document.getElementById("nomeContato").value = "";
       document.getElementById("emailContato").value = "";
       document.getElementById("mensagemContato").value = "";
     }
 
-    function sairADM() {
+    function carregarMensagensADM() {
+      const lista = document.getElementById("listaMensagensADM");
+
+      onValue(ref(db, "mensagens"), (snapshot) => {
+        lista.innerHTML = "";
+
+        if (!snapshot.exists()) {
+          lista.innerHTML = `
+            <div style="background:#0b1020; padding:18px; border-radius:12px;">
+              Nenhuma mensagem encontrada.
+            </div>
+          `;
+          return;
+        }
+
+        snapshot.forEach((child) => {
+          const dados = child.val();
+
+          lista.innerHTML += `
+            <div style="background:#0b1020; padding:18px; border-radius:12px; border:1px solid rgba(255,255,255,0.1);">
+              <h3 style="color:#00eaff; margin-bottom:8px;">Nova mensagem</h3>
+              <p><strong>Nome:</strong> ${dados.nome}</p>
+              <p><strong>Email:</strong> ${dados.email}</p>
+              <p><strong>Mensagem:</strong> ${dados.mensagem}</p>
+              <p><strong>Data:</strong> ${dados.data}</p>
+            </div>
+          `;
+        });
+      });
+    }
+
+    window.sairADM() {
       document.getElementById("areaADM").style.display = "none";
       document.getElementById("statusContato").innerText = "Você saiu da área ADM.";
       document.getElementById("contato").scrollIntoView({ behavior: "smooth" });
